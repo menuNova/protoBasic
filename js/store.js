@@ -1,233 +1,172 @@
-export let data = {
+let data = {
     valute: '$',
     language: document.documentElement.lang,
+    mainLang: 'ru',
     name: 'Shakespeare',
-    languages: ['ru', 'en', 'de']
+    languages: ['ru', 'en', 'de'],
+    xType: 'basic', // #DO-BASIC
+    mainMenu: 'Основное',
 };
 
+let sheetsData = {
+    api: 'https://script.google.com/macros/s/AKfycbwTxWnjPptRmIwFxgX7cb9py5zSxJSajGx0KkuGYmO5cXDIxdutWGNsovYPCn9R-7aR/exec'
+};
 
-export let languageData = {
+let indexData = [
+    ['.page__title', 'shakespeare'],
+    ['.page__subtitle', 'coffee & bistro'],
+];
+
+let payData = {
+    totalPrice: 0,
+};
+
+let languageData = {
     ru: {
         'title': 'Меню | ' + data.name,
         '#menuTitle': 'Меню',
         '#orderTitle': 'Ваш заказ',
+        '#callOfficiant': 'Вызвать официанта',
+        '#sendMenu': 'Отправить заказ',
+        '#sureCall': 'Вы уверены в вызове официанта?',
+        '#popup_order__confirm': 'Да',
+        '#popup_order__cancel': 'Отмена',
+        '.popup__button_ok': 'Да',
+        '.popup__button_cancel': 'Отмена',
+        '#cancelOrderSend': 'Отменить отправку заказа',
         'forJs': {
             total: 'Итого',
+            cancelOrderDescription: 'Отмениться то, что вы заказали в ',
+            understand: 'Понятно',
+            lang: 'Сменить язык на',
+            order: 'Заказ',
+            orderSended: 'Заказ отправлен',
+            surePortions: 'Вы хотите удалить эту порцию?',
+            canceled: 'Отменено',
+            cashes: 'Наличными',
+            cards: 'Картой',
             portion: 'Порция',
-            count: 'Количество'
+            soonOfficiant: 'Официант скоро подойдёт',
+            count: 'Количество',
+            sureOrder: 'Вы уверены в отправке заказа?',
+            cantSendOrder: 'Вы не можете отправить заказ с пустой корзиной, но можете нажать кнопку "Позвать официанта"',
+            cantPayOrder: 'Вы ещё не сделали заказ, чтобы оплатить его',
+            choosePayOrder: 'Выберите способ оплаты:',
+            payOrdered: 'Сейчас к вам подойдёт официант',
+            chooseTable: 'Мы не смогли определить номер вашего стола. Введите его пожалуйста',
+            addToOrder: 'Добавить к заказу'
         },
+        '#payOrder': 'Оплатить заказ',
     },
     en: {
         'title': 'Menu | ' + data.name,
         '#menuTitle': 'Menu',
         '#orderTitle': 'Your Order',
+        '#callOfficiant': 'Call the waiter',
+        '#sendMenu': 'Send Order',
+        '#sureCall': 'Are you sure you want to call the waiter?',
+        '#popup_order__confirm': 'Yes',
+        '#popup_order__cancel': 'Cancel',
+        '.popup__button_ok': 'Yes',
+        '.popup__button_cancel': 'Cancel',
+        '#surePortions': 'Do you want to remove this portion?',
         'forJs': {
             total: 'Total',
+            understand: 'Understand',
+            canceled: 'Cancelled',
+            order: 'Order',
+            lang: 'Change Language to',
             portion: 'Portion',
-            count: 'Count'
+            count: 'Count',
+            sureOrder: 'Are you sure you want to send the order?',
+            cantSendOrder: 'You cannot send an order with an empty cart, but you can press the "Call the waiter" button',
+            cantPayOrder: 'You have not yet placed an order to pay for it',
+            choosePayOrder: 'Choose a payment method:',
+            chooseTable: 'We could not determine your table number. Please enter it',
+            soonOfficiant: 'The waiter will be with you soon',
         },
+        '#payOrder': 'Pay Order',
     },
     de: {
         'title': 'Menü | ' + data.name,
         '#menuTitle': 'Menü',
         '#orderTitle': 'Ihre Bestellung',
+        '#callOfficiant': 'Kellner rufen',
+        '#sendMenu': 'Bestellung senden',
+        '#sureCall': 'Sind Sie sicher, dass Sie den Kellner rufen möchten?',
+        '#popup_order__confirm': 'Ja',
+        '#popup_order__cancel': 'Abbrechen',
+        '.popup__button_ok': 'Ja',
+        '.popup__button_cancel': 'Abbrechen',
+        '#surePortions': 'Möchten Sie diese Portion entfernen?',
         'forJs': {
             total: 'Gesamt',
+            understand: 'Verstanden',
+            canceled: 'Abgebrochen',
+            order: 'Bestellung',
+            cancel: 'Abbrechen',
             portion: 'Portion',
-            count: 'Count'
+            count: 'Anzahl',
+            lang: 'Sprache wechseln auf',
+            sureOrder: 'Sind Sie sicher, dass Sie die Bestellung senden möchten?',
+            cantSendOrder: 'Sie können keine Bestellung mit einem leeren Warenkorb senden, aber Sie können die Schaltfläche "Kellner rufen" drücken',
+            cantPayOrder: 'Sie haben noch keine Bestellung aufgegeben, um sie zu bezahlen',
+            choosePayOrder: 'Wählen Sie eine Zahlungsmethode:',
+            chooseTable: 'Wir konnten Ihre Tischnummer nicht bestimmen. Bitte geben Sie sie ein',
+            soonOfficiant: 'Der Kellner wird bald bei Ihnen sein',
         },
+        '#payOrder': 'Zahlung machen',
     },
 };
 
 
 
 
-export let dishesData = {
-    'category1': {
-        name: {
-            ru: 'Напитки',
-            en: 'Drinks',
-            de: 'Getränke',
-        },
-        items: [
-            {
-                name: {
-                    ru: 'Лимонад',
-                    en: 'Lemonade',
-                    de: 'Limonade',
-                },
-                price: {
-                    '200ml': 5,
-                    '500ml': 10,
-                },
-                description: {
-                    ru: 'Освежающий напиток с лимонным вкусом',
-                    en: 'Refreshing drink with lemon flavor',
-                    de: 'Erfrischungsgetränk mit Zitronengeschmack',
-                },
-            },
-            {
-                name: {
-                    ru: 'Мохито безалкогольный',
-                    en: 'Non-alcoholic Mojito',
-                    de: 'Alkoholfreier Mojito',
-                },
-                price: {
-                    '200ml': 7,
-                    '400ml': 13,
-                },
-                description: {
-                    ru: 'Освежающий мятный коктейль с лаймом',
-                    en: 'Refreshing mint cocktail with lime',
-                    de: 'Erfrischender Minzcocktail mit Limette',
-                },
-            },
-            {
-                name: {
-                    ru: 'Чай с лимоном',
-                    en: 'Lemon Tea',
-                    de: 'Zitronentee',
-                },
-                price: {
-                    '200ml': 4,
-                    '400ml': 8,
-                },
-                description: {
-                    ru: 'Горячий чай с лимоном',
-                    en: 'Hot tea with lemon',
-                    de: 'Heißer Tee mit Zitrone',
-                },
-            },
-        ],
-    },
-    'category2': {
-        name: {
-            ru: 'Булочные изделия',
-            en: 'Bakery products',
-            de: 'Backwaren',
-        },
-        items: [
-            {
-                name: {
-                    ru: 'Круассан',
-                    en: 'Croissant',
-                    de: 'Croissant',
-                },
-                price: {
-                    '100g': 4,
-                    '200g': 7,
-                },
-                description: {
-                    ru: 'Классический французский круассан',
-                    en: 'Classic French croissant',
-                    de: 'Klassisches französisches Croissant',
-                },
-            },
-            {
-                name: {
-                    ru: 'Слойка с яблоком',
-                    en: 'Apple Puff',
-                    de: 'Apfeltasche',
-                },
-                price: {
-                    '100g': 5,
-                    '200g': 9,
-                },
-                description: {
-                    ru: 'Слойка с начинкой из яблок',
-                    en: 'Puff pastry with apple filling',
-                    de: 'Blätterteig mit Apfelfüllung',
-                },
-            },
-            {
-                name: {
-                    ru: 'Багет',
-                    en: 'Baguette',
-                    de: 'Baguette',
-                },
-                price: {
-                    '100g': 3,
-                    '200g': 5,
-                },
-                description: {
-                    ru: 'Французский хлеб с хрустящей корочкой',
-                    en: 'French bread with a crispy crust',
-                    de: 'Französisches Brot mit knuspriger Kruste',
-                },
-            },
-        ],
-    },
-    'category3': {
-        name: {
-            ru: 'Десерты',
-            en: 'Desserts',
-            de: 'Nachspeisen',
-        },
-        items: [
-            {
-                name: {
-                    ru: 'Чизкейк',
-                    en: 'Cheesecake',
-                    de: 'Käsekuchen',
-                },
-                price: {
-                    '100g': 6,
-                    '200g': 12,
-                    '300g': 16,
-                },
-                description: {
-                    ru: 'Лёгкий сырный торт с клубничным соусом',
-                    en: 'Light cheese cake with strawberry sauce',
-                    de: 'Leichter Käsekuchen mit Erdbeersoße',
-                },
-            },
-            {
-                name: {
-                    ru: 'Шоколадный мусс',
-                    en: 'Chocolate Mousse',
-                    de: 'Schokoladenmousse',
-                },
-                price: {
-                    '100g': 8,
-                    '200g': 15,
-                },
-                description: {
-                    ru: 'Воздушный шоколадный десерт',
-                    en: 'Airy chocolate dessert',
-                    de: 'Luftiges Schokoladen-Dessert',
-                },
-            },
-            {
-                name: {
-                    ru: 'Тирамису',
-                    en: 'Tiramisu',
-                    de: 'Tiramisu',
-                },
-                price: {
-                    '100g': 10,
-                    '200g': 18,
-                },
-                description: {
-                    ru: 'Итальянский десерт с маскарпоне и кофе',
-                    en: 'Italian dessert with mascarpone and coffee',
-                    de: 'Italienisches Dessert mit Mascarpone und Kaffee',
-                },
-            },
-        ],
-    },
+function textToId(text) {
+    return text
+        .normalize('NFKD') // Приводим символы к нормальной форме
+        .replace(/[\u0400-\u04FF\u0500-\u052F\u1E00-\u1EFF]/g, match => {
+            return match.charCodeAt(0).toString(36); // Кодируем нестандартные символы в base36
+        })
+        .replace(/[^a-zA-Z0-9-]/g, '-') // Заменяем пробелы и недопустимые символы
+        .replace(/-+/g, '-') // Убираем дублирующиеся дефисы
+        .replace(/^-+|-+$/g, '') // Удаляем дефисы по краям
+        .toLowerCase();
 };
 
 
-export let cartData = {
-    
+
+
+let dishesData = {};
+
+let setDishesData = function (newData) {
+    dishesData = newData;
 };
 
-// if (localStorage.getItem('cartData')) {
-//     cartData = JSON.parse(localStorage.getItem('cartData'));
-// };
+
+let getDishesData = function () {
+    return dishesData;
+};
 
 
-export function setCartData(newData) {
+
+let setLastOrder = function (newLastOrder, isNew = true) {
+    lastOrder = newLastOrder;
+    if (newLastOrder != 'delete') {
+        allLasts.push(lastOrder);
+    } else {
+        allLasts = JSON.parse(localStorage.getItem(data.name + '-allLastS'));
+        lastOrder = allLasts.pop();
+    };
+    localStorage.setItem(data.name + '-allLastS', JSON.stringify(allLasts))
+    localStorage.setItem(data.name + '-lastS', JSON.stringify(lastOrder));
+};
+
+let cartData = {};
+let lastOrder = -1;
+let allLasts = [];
+
+
+function setCartData(newData) {
     cartData = newData;
-    // localStorage.setItem('cartData', JSON.stringify(cartData));
 };
