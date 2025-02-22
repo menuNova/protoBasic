@@ -1,3 +1,3 @@
-import { fetchDishesList } from '/syncGoogleSheets.js'
+import { fetchDishesList } from 'syncGoogleSheets.js'
 
 fetchDishesList();
