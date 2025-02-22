@@ -23,7 +23,7 @@ strike {
     right: 0;
     top: 0;
     
-    background-image: url(/img/main/bg-1.jpg);
+    background-image: url(../img/main/bg-1.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
